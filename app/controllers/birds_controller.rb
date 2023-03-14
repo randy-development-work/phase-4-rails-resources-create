@@ -16,4 +16,21 @@ class BirdsController < ApplicationController
     end
   end
 
+  # POST /birds
+  def create
+    # bird = Bird.create(name: params[:name], species: params[:species])
+    # render json: bird, status: :created
+
+    bird = Bird.create(bird_params)
+    if bird
+      render json: bird, status: :created
+    else
+      render json: { error: "Failed to create new record "}, status: :not_found
+    end
+  end
+
+  private
+  def bird_params
+    params.permit(:name, :species)
+  end
 end
